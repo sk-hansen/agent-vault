@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "skh.vaultbar",
+  "name": "Vault Bar",
+  "version": "0.1.0",
+  "author": "Simon Kaas Hansen",
+  "license": "MIT",
+  "description": "Agent secret vault on gnome-keyring: browse, copy, add, and delete the secrets your coding agents may use (keyring items scoped with vault=agent).",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Vault Bar",
+    "description": "Bar shows a lock with the secret count; click to browse/copy/add agent-vault secrets",
+    "category": "System",
+    "defaultSection": "right",
+    "allowMultiple": false
+  }
+}
