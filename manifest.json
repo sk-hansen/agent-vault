@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "id": "skh.vaultbar",
-  "name": "Vault Bar",
+  "id": "skh.agent-vault",
+  "name": "Agent Vault",
   "version": "0.1.0",
   "author": "Simon Kaas Hansen",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "barWidget": "BarWidget.qml"
   },
   "barWidget": {
-    "displayName": "Vault Bar",
+    "displayName": "Agent Vault",
     "description": "Bar shows a lock with the secret count; click to browse/copy/add agent-vault secrets",
     "category": "System",
     "defaultSection": "right",

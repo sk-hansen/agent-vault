@@ -1,4 +1,4 @@
-# Vault Bar — Omarchy bar widget
+# Agent Vault — Omarchy bar widget
 
 An agent secret vault on **gnome-keyring**: secrets live as ordinary keyring
 items tagged `vault=agent name=<name>`, so agents (via pi's `secret_*` tools)
@@ -31,8 +31,8 @@ session log). Vault only what agents are allowed to hold.
 ## Install
 
 ```bash
-cp -r ~/code/vaultbar ~/.config/omarchy/plugins/skh.vaultbar
-omarchy bar put skh.vaultbar --after skh.pibar
+cp -r ~/code/agent-vault ~/.config/omarchy/plugins/skh.agent-vault
+omarchy bar put skh.agent-vault --after skh.pibar
 ```
 
 Plugin code hot-reloads on save under `~/.config/omarchy/plugins/`.

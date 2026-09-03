@@ -6,7 +6,7 @@ import qs.Ui
 
 BarWidget {
   id: root
-  moduleName: "skh.vaultbar"
+  moduleName: "skh.agent-vault"
 
   property int secretCount: -1
 
@@ -73,7 +73,7 @@ BarWidget {
     active: true
     source: Qt.resolvedUrl("Panel.qml")
     visible: false
-    onStatusChanged: if (status === Loader.Error) console.warn("skh.vaultbar Panel.qml failed to load")
+    onStatusChanged: if (status === Loader.Error) console.warn("skh.agent-vault Panel.qml failed to load")
     onLoaded: {
       root.injectPanel()
       Qt.callLater(root.injectPanel)

@@ -7,8 +7,8 @@ import qs.Ui
 
 Panel {
   id: root
-  moduleName: "skh.vaultbar"
-  ipcTarget: "skh.vaultbar"
+  moduleName: "skh.agent-vault"
+  ipcTarget: "skh.agent-vault"
 
   property var anchorItem: null
   property var hostWidget: null
