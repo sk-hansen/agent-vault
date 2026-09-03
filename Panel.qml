@@ -194,16 +194,51 @@ Panel {
         width: parent.width
         spacing: Style.space(6)
 
-        // ---- Hero: title + count.
+        // ---- Hero: title + count + add button.
         Item {
           width: parent.width
           height: Style.space(52)
 
+          Rectangle {
+            id: addBtn
+            anchors.right: parent.right
+            anchors.rightMargin: Style.space(16)
+            anchors.verticalCenter: parent.verticalCenter
+            width: addBtnText.implicitWidth + Style.space(20)
+            height: addBtnText.implicitHeight + Style.space(10)
+            radius: height / 2
+            color: root.adding ? Color.accent
+              : (addBtnArea.containsMouse ? Style.hoverFillFor(root.fg, Color.accent) : "transparent")
+            border.width: root.adding ? 0 : 1
+            border.color: root.faint
+
+            Text {
+              id: addBtnText
+              anchors.centerIn: parent
+              text: root.adding ? "✕ Cancel" : "+ Add"
+              color: root.adding ? Color.background : root.fg
+              font.family: root.bar ? root.bar.fontFamily : Style.font.family
+              font.pixelSize: Style.font.caption
+            }
+
+            MouseArea {
+              id: addBtnArea
+              anchors.fill: parent
+              hoverEnabled: true
+              cursorShape: Qt.PointingHandCursor
+              onClicked: {
+                root.adding = !root.adding
+                if (root.adding) addName.forceActiveFocus()
+                else keyCatcher.forceActiveFocus()
+              }
+            }
+          }
+
           Column {
             anchors.left: parent.left
             anchors.leftMargin: Style.space(16)
-            anchors.right: parent.right
-            anchors.rightMargin: Style.space(16)
+            anchors.right: addBtn.left
+            anchors.rightMargin: Style.space(12)
             anchors.verticalCenter: parent.verticalCenter
             spacing: Style.space(2)
 
