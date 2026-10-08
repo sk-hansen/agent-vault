@@ -12,6 +12,7 @@ Panel:
 - **Secret list** with `/` filter — Enter/click/`y` copies the value to the
   clipboard (`wl-copy`); the value never renders on screen.
 - **`a` Add** — name + masked value field, stored via `secret-tool`.
+- **`e` Edit** — add form prefilled with the selected name; a new value replaces it.
 - **`d` Delete ×2** — two-press confirm.
 
 ## Agent side (pi)

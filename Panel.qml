@@ -94,15 +94,24 @@ Panel {
     actionProc.running = true
   }
 
+  function startEdit() {
+    var s = selected()
+    if (!s) return
+    addName.text = s.name
+    root.adding = true
+    addValue.forceActiveFocus()
+  }
+
   function submitAdd() {
     var name = addName.text.trim()
     if (name === "" || addValue.text === "" || actionProc.running) return
+    var exists = root.secrets.some(s => s.name === name)
     actionProc.command = ["bash", "-c",
       'printf %s "$VAULT_VALUE" | secret-tool store --label="agent-vault: $VAULT_NAME" vault agent name "$VAULT_NAME"']
     actionProc.environment = ({ VAULT_NAME: name, VAULT_VALUE: addValue.text })
     actionProc.pendingRefresh = true
     actionProc.running = true
-    root.notice = "Stored '" + name + "'"
+    root.notice = (exists ? "Updated '" : "Stored '") + name + "'"
     addName.text = ""
     addValue.text = ""
     root.adding = false
@@ -186,7 +195,8 @@ Panel {
         else if (text === "r") root.refresh()
         else if (text === "y") root.copySelected()
         else if (text === "d") root.requestDelete()
-        else if (text === "a") { root.adding = true; addName.forceActiveFocus() }
+        else if (text === "e") root.startEdit()
+        else if (text === "a") { addName.text = ""; root.adding = true; addName.forceActiveFocus() }
       }
 
       Column {
@@ -336,6 +346,7 @@ Panel {
                     ? [{key: "copy",
                         label: root.copiedIndex === row.index ? "✓ Copied" : "↵ Copy",
                         danger: false},
+                       {key: "edit", label: "e Edit", danger: false},
                        {key: "delete",
                         label: root.confirmingDelete ? "d Sure?" : "d Delete",
                         danger: true}]
@@ -368,7 +379,12 @@ Panel {
                       anchors.fill: parent
                       hoverEnabled: true
                       cursorShape: Qt.PointingHandCursor
-                      onClicked: parent.modelData.key === "copy" ? root.copySelected() : root.requestDelete()
+                      onClicked: {
+                        var k = parent.modelData.key
+                        if (k === "copy") root.copySelected()
+                        else if (k === "edit") root.startEdit()
+                        else root.requestDelete()
+                      }
                     }
                   }
                 }
@@ -442,7 +458,7 @@ Panel {
           TextField {
             id: addValue
             width: parent.width
-            placeholderText: "value"
+            placeholderText: root.secrets.some(s => s.name === addName.text.trim()) ? "new value (replaces current)" : "value"
             echoMode: TextInput.Password
             font.pixelSize: Style.font.caption
             onAccepted: root.submitAdd()
@@ -461,7 +477,7 @@ Panel {
             anchors.rightMargin: Style.space(16)
             anchors.verticalCenter: parent.verticalCenter
             text: root.adding ? "↵ save · esc cancel"
-              : "↵/y copy · a add · d delete ×2 · / filter · r refresh · esc"
+              : "↵/y copy · a add · e edit · d delete ×2 · / filter · r refresh · esc"
             color: root.dimmed
             font.family: root.bar ? root.bar.fontFamily : Style.font.family
             font.pixelSize: Style.font.caption
