@@ -6,9 +6,13 @@
   "author": "Simon Kaas Hansen",
   "license": "MIT",
   "description": "Agent secret vault on gnome-keyring: browse, copy, add, and delete the secrets your coding agents may use (keyring items scoped with vault=agent).",
-  "kinds": ["bar-widget"],
+  "kinds": [
+    "bar-widget",
+    "panel"
+  ],
   "entryPoints": {
-    "barWidget": "BarWidget.qml"
+    "barWidget": "BarWidget.qml",
+    "panel": "VaultWindow.qml"
   },
   "barWidget": {
     "displayName": "Agent Vault",
@@ -16,5 +20,6 @@
     "category": "System",
     "defaultSection": "right",
     "allowMultiple": false
-  }
+  },
+  "keepLoaded": true
 }

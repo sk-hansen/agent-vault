@@ -46,6 +46,19 @@ BarWidget {
     if (panelLoader.item && panelLoader.item.toggle) panelLoader.item.toggle()
   }
 
+  // Full application window (the plugin's `panel` entry point). A plugin may
+  // not host its own window from a bar-widget Loader \u2014 the shell's panel
+  // loader owns it, so summon it the documented way. The plugin declares both
+  // `bar-widget` and `panel`, which routes summon to the panel loader.
+  function openWindow() {
+    if (!summonProc.running) summonProc.running = true
+  }
+
+  Process {
+    id: summonProc
+    command: ["omarchy-shell", "shell", "summon", "skh.agent-vault", "{}"]
+  }
+
   readonly property bool opened: panelLoader.item ? panelLoader.item.opened === true : false
 
   function open() {
@@ -87,12 +100,13 @@ BarWidget {
     readonly property string lockGlyph: String.fromCodePoint(0xF033E)  // nf-md-lock
     text: root.secretCount > 0 ? lockGlyph + " " + root.secretCount : lockGlyph
     fontSize: Style.font.caption
-    tooltipText: root.secretCount >= 0
+    tooltipText: (root.secretCount >= 0
       ? "Agent Vault — " + root.secretCount + " secret" + (root.secretCount === 1 ? "" : "s")
-      : "Agent Vault"
+      : "Agent Vault") + "\nright-click: open as window"
 
     onPressed: function(buttonCode) {
       if (buttonCode === Qt.MiddleButton) root.refreshCount()
+      else if (buttonCode === Qt.RightButton) root.openWindow()
       else root.togglePanel()
     }
   }
