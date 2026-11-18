@@ -12,8 +12,11 @@ if ((${#missing[@]})); then
 fi
 mkdir -p ~/.local/bin ~/.local/share/applications
 ln -sf "$here/agent-vault.py" ~/.local/bin/agent-vault
-# Copied, not symlinked: some launchers skip symlinked desktop entries.
-cp --remove-destination "$here/agent-vault.desktop" ~/.local/share/applications/dk.skh.AgentVault.desktop
+# Copied, not symlinked: some launchers skip symlinked desktop entries. The icon
+# is pinned to an absolute path so launchers that cache theme lookups (COSMIC
+# launcher/App Library) show it without a re-login.
+sed "s|^Icon=.*|Icon=$HOME/.local/share/icons/hicolor/256x256/apps/dk.skh.AgentVault.png|" \
+  "$here/agent-vault.desktop" > ~/.local/share/applications/dk.skh.AgentVault.desktop
 for f in "$here"/icons/hicolor/*/apps/*.png; do
   dest=~/.local/share/icons/hicolor/${f#"$here"/icons/hicolor/}
   mkdir -p "$(dirname "$dest")" && ln -sf "$f" "$dest"
