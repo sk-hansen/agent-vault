@@ -26,8 +26,10 @@ secret-tool lookup vault agent name my-token
 secret-tool clear  vault agent name my-token
 ```
 
-Note: `secret_get` puts the value into the agent's conversation context (and
-session log). Vault only what agents are allowed to hold.
+`secret_get` returns a `{{secret:name}}` placeholder, not the value; pi
+substitutes the real value into tool arguments at execution time, so the
+plaintext never enters the conversation or session log. Vault only what agents
+are allowed to use.
 
 ## Install
 
@@ -37,3 +39,18 @@ omarchy bar put skh.agent-vault --after skh.pibar
 ```
 
 Plugin code hot-reloads on save under `~/.config/omarchy/plugins/`.
+
+## Fedora / COSMIC (or any GTK desktop)
+
+`fedora/agent-vault.py` is a standalone GTK4/libadwaita window with the same
+scope and features (filter, copy via `wl-copy`, add, edit, delete). It talks to
+the Secret Service through libsecret, so it works with gnome-keyring or KDE's
+`ksecretd`, and items stay interchangeable with `secret-tool` and pi.
+
+```bash
+fedora/install.sh   # ~/.local/bin/agent-vault, launcher entry, app icon
+```
+
+Keys: `/` filter, Enter/`y` copy, `a` add, `e` edit, `d` delete (twice), `r`
+refresh, Esc close. Bind `agent-vault` to a shortcut in COSMIC Settings →
+Keyboard → Custom shortcuts.

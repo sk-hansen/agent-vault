@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Agent Vault
+Comment=Browse, copy, add and delete secrets your coding agents may use
+Exec=agent-vault
+Icon=dk.skh.AgentVault
+Terminal=false
+Categories=Utility;Security;
+Keywords=secret;keyring;password;agent;vault;
+StartupWMClass=dk.skh.AgentVault
